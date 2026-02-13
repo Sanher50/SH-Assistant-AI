@@ -1,0 +1,19 @@
+{
+  "profile": {
+    "name": "Sandra Herbert",
+    "preferredName": "Sandra",
+    "alias": "SH",
+    "tonePreference": "warm, friendly, emoji-rich"
+  },
+  "projects": {
+    "active": {
+      "name": "SH Assistant",
+      "lastStep": "Getting started",
+      "nextStep": "Continue development"
+    }
+  },
+  "notes": [
+    "i prefer short answers",
+    "call me Sandra"
+  ]
+}

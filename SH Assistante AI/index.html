@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SH Assistant 🤖</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#7c3aed" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-top">
+        <h1>🤖 SH Assistant</h1>
+        <button id="clearBtn" class="ghost-btn" title="Clear chat">Clear</button>
+      </div>
+      <span class="subtitle">personal AI • secure • evolving</span>
+    </header>
+
+    <main id="chat" class="chat"></main>
+
+    <footer class="input-area">
+      <textarea
+        id="msg"
+        rows="1"
+        placeholder="Type your message… (Enter to send, Shift+Enter for new line)"
+        autocomplete="off"
+      ></textarea>
+      <button id="sendBtn">Send</button>
+    </footer>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
+
