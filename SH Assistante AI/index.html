@@ -3,38 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <title>SH Assistant 🤖</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#7c3aed" />
+  <meta name="theme-color" content="#0b1020" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Prism for syntax highlighting -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+  />
+
   <link rel="stylesheet" href="index.css" />
 </head>
 
 <body>
   <div class="app">
-    <header class="header">
-      <div class="header-top">
-        <h1>🤖 SH Assistant</h1>
-        <button id="clearBtn" class="ghost-btn" title="Clear chat">Clear</button>
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">SH</div>
+        <div class="brand-text">
+          <div class="title">SH Assistant</div>
+          <div class="subtitle">secure • calm • clean</div>
+        </div>
       </div>
-      <span class="subtitle">personal AI • secure • evolving</span>
+
+      <div class="actions">
+        <button id="toggleThemeBtn" class="btn ghost">Theme</button>
+        <button id="clearBtn" class="btn ghost">Clear</button>
+      </div>
     </header>
 
     <main id="chat" class="chat"></main>
 
-    <footer class="input-area">
+    <footer class="composer">
       <textarea
         id="msg"
         rows="1"
-        placeholder="Type your message… (Enter to send, Shift+Enter for new line)"
-        autocomplete="off"
+        placeholder="Message SH Assistant… (Enter to send • Shift+Enter new line)"
       ></textarea>
-      <button id="sendBtn">Send</button>
+      <button id="sendBtn" class="btn primary">Send</button>
     </footer>
   </div>
+
+  <!-- Prism scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 
   <script src="index.js"></script>
 </body>
 </html>
-
