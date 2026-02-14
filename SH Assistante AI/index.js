@@ -4,19 +4,16 @@ const sendBtn = document.getElementById("sendBtn");
 const clearBtn = document.getElementById("clearBtn");
 const toggleThemeBtn = document.getElementById("toggleThemeBtn");
 
-// ⚠️ SH_API_KEY here (temporary for testing)
-const SH_API_KEY = "PASTE_YOUR_SH_API_KEY_HERE";
-
-// ✅ Railway backend base domain:
-const BACKEND_BASE = "https://sh-backend-api-production-5b7e.up.railway.app";
-
-// ✅ Backend endpoint:
-const BACKEND_URL = `${BACKEND_BASE}/api/ai/chat`;
+// ✅ Correct endpoint (public, no API key)
+const BACKEND_URL =
+  "https://sh-backend-api-production-5b7e.up.railway.app/api/public/chat";
 
 const STORAGE_KEY = "sh_assistant_chat_v2";
 const THEME_KEY = "sh_assistant_theme_v1";
 
-// Theme
+// --------------------
+// Theme (migraine friendly)
+// --------------------
 function applyTheme(theme) {
   if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
   else document.documentElement.removeAttribute("data-theme");
@@ -29,7 +26,9 @@ toggleThemeBtn.addEventListener("click", () => {
   applyTheme(cur === "dark" ? "light" : "dark");
 });
 
-// Utils
+// --------------------
+// Utilities
+// --------------------
 function escapeHtml(str) {
   return String(str || "")
     .replace(/&/g, "&amp;")
@@ -44,6 +43,7 @@ function autoResize() {
   input.style.height = Math.min(input.scrollHeight, 180) + "px";
 }
 
+// Map language names to Prism classes
 function normalizeLang(lang) {
   const l = (lang || "").toLowerCase().trim();
   if (!l) return "plaintext";
@@ -54,6 +54,10 @@ function normalizeLang(lang) {
   return l;
 }
 
+// Convert assistant text into HTML with:
+// - fenced code blocks ```lang ...```
+// - inline `code`
+// - line breaks
 function renderAssistant(text) {
   const raw = String(text || "");
   const parts = raw.split(/```/);
@@ -91,6 +95,7 @@ function renderAssistant(text) {
       `;
     }
   }
+
   return html.trim();
 }
 
@@ -114,9 +119,11 @@ function addMessage({ role, content }) {
   const body = document.createElement("div");
   body.className = "body";
 
-  body.innerHTML = isUser
-    ? escapeHtml(content).replace(/\n/g, "<br>")
-    : renderAssistant(content);
+  if (isUser) {
+    body.innerHTML = escapeHtml(content).replace(/\n/g, "<br>");
+  } else {
+    body.innerHTML = renderAssistant(content);
+  }
 
   bubble.appendChild(meta);
   bubble.appendChild(body);
@@ -127,6 +134,7 @@ function addMessage({ role, content }) {
   chat.appendChild(row);
   chat.scrollTop = chat.scrollHeight;
 
+  // Syntax highlight just-added blocks
   if (!isUser && window.Prism) Prism.highlightAllUnder(bubble);
 
   saveChat();
@@ -135,7 +143,6 @@ function addMessage({ role, content }) {
 function saveChat() {
   localStorage.setItem(STORAGE_KEY, chat.innerHTML);
 }
-
 function loadChat() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) chat.innerHTML = saved;
@@ -144,6 +151,7 @@ function loadChat() {
 }
 loadChat();
 
+// Copy buttons (event delegation)
 chat.addEventListener("click", async (e) => {
   const btn = e.target.closest(".copy");
   if (!btn) return;
@@ -161,12 +169,15 @@ chat.addEventListener("click", async (e) => {
   }
 });
 
+// Clear chat
 clearBtn.addEventListener("click", () => {
   chat.innerHTML = "";
   localStorage.removeItem(STORAGE_KEY);
 });
 
+// --------------------
 // Send
+// --------------------
 async function send() {
   const text = input.value.trim();
   if (!text) return;
@@ -185,16 +196,10 @@ async function send() {
 
   try {
     const res = await fetch(BACKEND_URL, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "x-api-key": SH_API_KEY
-  },
-  body: JSON.stringify({
-    message: text
-  })
-});
-
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
 
     const data = await res.json().catch(() => ({}));
     const reply = data.reply || data.message || data.error || "No response returned.";
@@ -203,7 +208,7 @@ async function send() {
     if (thinkingRow) thinkingRow.remove();
 
     addMessage({ role: "assistant", content: reply });
-  } catch {
+  } catch (err) {
     const thinkingRow = document.getElementById(thinkingId);
     if (thinkingRow) thinkingRow.remove();
     addMessage({ role: "assistant", content: "❌ Network error contacting backend." });
