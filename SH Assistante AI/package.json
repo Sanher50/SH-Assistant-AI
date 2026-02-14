@@ -1,0 +1,10 @@
+{
+  "name": "sh-assistant-frontend",
+  "private": true,
+  "scripts": {
+    "start": "npx serve . -l $PORT"
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
+}

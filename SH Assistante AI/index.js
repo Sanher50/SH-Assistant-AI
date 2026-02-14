@@ -4,9 +4,14 @@ const sendBtn = document.getElementById("sendBtn");
 const clearBtn = document.getElementById("clearBtn");
 const toggleThemeBtn = document.getElementById("toggleThemeBtn");
 
-// ✅ Correct backend endpoint (PUBLIC)
-const BACKEND_URL =
-  "https://sh-backend-api-production-5b7e.up.railway.app/api/public/chat";
+// ⚠️ SH_API_KEY here (temporary for testing)
+const SH_API_KEY = "PASTE_YOUR_SH_API_KEY_HERE";
+
+// ✅ Railway backend base domain:
+const BACKEND_BASE = "https://sh-backend-api-production-5b7e.up.railway.app";
+
+// ✅ Backend endpoint:
+const BACKEND_URL = `${BACKEND_BASE}/api/ai/chat`;
 
 const STORAGE_KEY = "sh_assistant_chat_v2";
 const THEME_KEY = "sh_assistant_theme_v1";
@@ -180,12 +185,16 @@ async function send() {
 
   try {
     const res = await fetch(BACKEND_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        messages: [{ role: "user", content: text }]
-      })
-    });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "x-api-key": SH_API_KEY
+  },
+  body: JSON.stringify({
+    message: text
+  })
+});
+
 
     const data = await res.json().catch(() => ({}));
     const reply = data.reply || data.message || data.error || "No response returned.";
