@@ -8,6 +8,7 @@ const toggleThemeBtn = document.getElementById("toggleThemeBtn");
 const BACKEND_URL =
   "https://sh-backend-api-production-5b7e.up.railway.app/api/public/chat";
 
+
 const STORAGE_KEY = "sh_assistant_chat_v2";
 const THEME_KEY = "sh_assistant_theme_v1";
 
