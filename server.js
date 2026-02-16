@@ -15,11 +15,11 @@ app.use(express.json({ limit: "1mb" }));
 const PORT = process.env.PORT || 3000;
 
 // Your BACKEND chat endpoint (full URL)
-const BACKEND_URL =
-  process.env.BACKEND_URL ||
-  "https://sh-backend-api-production-5b7e.up.railway.app/api/public/chat";
+const BACKEND_URL = (process.env.BACKEND_URL ||
+  "https://sh-backend-api-production-5b7e.up.railway.app/api/public/chat"
+).trim();
 
-const SH_API_KEY = process.env.SH_API_KEY;
+const SH_API_KEY = (process.env.SH_API_KEY || "").trim();
 
 // Build identifier
 const BUILD_TAG = process.env.RAILWAY_GIT_COMMIT_SHA || `local-${Date.now()}`;
